@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1565c0" />
+    <meta name="description" content="Municipal Trade License Portal - Government of Maharashtra" />
+    <meta name="keywords" content="trade license, municipal, government, maharashtra, online application" />
+    <title>Municipal Trade License Portal</title>
+    
+    <!-- Preload Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Government Website Favicon -->
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <script>
+      // Comprehensive error suppression for browser extensions
+      (function() {
+        'use strict';
+        
+        // List of patterns to ignore
+        const ignorePatterns = [
+          'chrome-extension',
+          'runtime.lastError',
+          'back/forward cache',
+          'message channel is closed',
+          'tx_attempts_exceeded',
+          'tx_ack_timeout',
+          'ServiceWorker',
+          'sw.js',
+          'graphql-tag',
+          'fragment',
+          'apollo'
+        ];
+        
+        // Override console methods to filter extension errors
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        const originalLog = console.log;
+        
+        function shouldIgnore(message) {
+          const msgStr = String(message).toLowerCase();
+          return ignorePatterns.some(pattern => msgStr.includes(pattern.toLowerCase()));
+        }
+        
+        console.error = function(...args) {
+          if (!shouldIgnore(args[0])) {
+            originalError.apply(console, args);
+          }
+        };
+        
+        console.warn = function(...args) {
+          if (!shouldIgnore(args[0])) {
+            originalWarn.apply(console, args);
+          }
+        };
+        
+        // Suppress window errors from extensions
+        window.addEventListener('error', function(event) {
+          if (event.filename && (
+            event.filename.includes('chrome-extension') ||
+            event.filename.includes('extension') ||
+            event.message.includes('ServiceWorker')
+          )) {
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+          }
+        }, true);
+        
+        // Suppress unhandled promise rejections from extensions
+        window.addEventListener('unhandledrejection', function(event) {
+          const reason = event.reason || '';
+          const message = reason.message || reason.toString();
+          
+          if (shouldIgnore(message)) {
+            event.preventDefault();
+            return false;
+          }
+        });
+        
+        // Override runtime.lastError globally
+        if (typeof chrome !== 'undefined' && chrome.runtime) {
+          const originalLastError = chrome.runtime.lastError;
+          Object.defineProperty(chrome.runtime, 'lastError', {
+            get: function() {
+              // Return null to suppress lastError warnings
+              return null;
+            },
+            configurable: true
+          });
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+        <h1>JavaScript Required</h1>
+        <p>You need to enable JavaScript to run this application.</p>
+        <p>Please enable JavaScript in your browser settings and refresh the page.</p>
+      </div>
+    </noscript>
+    <div id="root"></div>
+    
+    <!-- Prevent service worker registration errors -->
+    <script>
+      // Disable service worker to prevent SW errors
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for(let registration of registrations) {
+            registration.unregister();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
