@@ -34,6 +34,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import DocumentVerification from './pages/admin/DocumentVerification';
 import DataVerification from './pages/admin/DataVerification';
 import FinalApproval from './pages/admin/FinalApproval';
+import DownloadReceipt from './pages/DownloadReceipt';
 
 // Enhanced theme matching the design
 const theme = createTheme({
@@ -115,7 +116,7 @@ function App() {
                   <Route path="/citizen/application/:id" element={<ApplicationDetails />} />
                   <Route path="/citizen/renewal" element={<LicenseRenewal />} />
                   <Route path="/citizen/payment" element={<OnlinePayment />} />
-                  <Route path="/citizen/download" element={<TrackApplication />} />
+                  <Route path="/citizen/download" element={<DownloadReceipt />} />
                   <Route path="/citizen/track" element={<TrackApplication />} />
                   <Route path="/citizen/documents" element={<DocumentManagement />} />
                   <Route path="/citizen/rts" element={<RTSComplaint />} />

@@ -96,7 +96,7 @@ const CitizenPortal = () => {
       subtitle: 'Documents Download',
       description: 'Download official certificates and payment receipts',
       icon: <Download sx={{ fontSize: 40 }} />,
-      path: '/citizen/track',
+      path: '/citizen/download',
       color: '#7b1fa2',
       gradient: 'linear-gradient(135deg, #7b1fa2 0%, #6a1b9a 100%)',
       category: 'primary'
